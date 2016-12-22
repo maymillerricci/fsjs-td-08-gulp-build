@@ -1,4 +1,9 @@
-var gulp = require('gulp');
+var gulp = require('gulp'),
+     del = require('del');
+
+var options = {
+  dist: 'dist'
+}
 
 // gulp scripts:
 // concatenate, minify, copy all js -> all.min.js
@@ -18,14 +23,17 @@ gulp.task('styles');
 // -> copy -> dist/content
 gulp.task('images');
 
-// gulp clean: 
-// deleted everything in dist
-gulp.task('clean');
+// delete everything in dist directory
+gulp.task('clean', function() {
+  del(options.dist);
+});
 
-// gulp build:
-// clean (first), scripts, styles, images
-gulp.task('build');
+// run clean task first, then run scripts, styles, & images tasks
+gulp.task('build', ['clean'], function() {
+  // scripts, styles, images
+});
 
-// gulp:
-// = gulp build (default)
-gulp.task('default');
+// run build task
+gulp.task('default', function() {
+  gulp.start('build');
+});
