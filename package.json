@@ -1,0 +1,19 @@
+{
+  "name": "fsjs-td-08-gulp-build",
+  "version": "1.0.0",
+  "description": "practice site for Gulp build process",
+  "main": "js/global.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "fsjs-td-08-gulp-build"
+  },
+  "keywords": [
+    "treehouse",
+    "gulp"
+  ],
+  "author": "May Miller-Ricci",
+  "license": "MIT"
+}
