@@ -1,15 +1,25 @@
 var gulp = require('gulp'),
-    maps = require('gulp-sourcemaps'), 
+    maps = require('gulp-sourcemaps'),
+  concat = require('gulp-concat'),
+  uglify = require('gulp-uglify'),
     sass = require('gulp-sass'),
     csso = require('gulp-csso'),
   rename = require('gulp-rename'),
      del = require('del');
 
-// gulp scripts:
-// concatenate, minify, copy all js -> all.min.js
-// -> copy -> dist/scripts
+// concatenate all js and minify -> all.min.js
 // with source map
-gulp.task('scripts');
+// -> copy -> dist/scripts
+gulp.task('scripts', function() {
+  return gulp.src(['js/circle/*.js', 'js/global.js'])
+    .pipe(maps.init())
+    .pipe(concat('all.js'))
+    .pipe(uglify())
+    .pipe(rename('all.min.js'))
+    .pipe(maps.write('./'))
+    .pipe(gulp.dest('js'))
+    .pipe(gulp.dest('dist/scripts'));
+});
 
 // compile scss files -> css
 // concatenate all and minify -> all.min.css
@@ -33,7 +43,7 @@ gulp.task('images');
 
 // delete everything in dist directory
 gulp.task('clean', function() {
-  del(['dist', 'sass/**.css*']);
+  del(['dist', 'js/all*.js*', 'sass/**.css*']);
 });
 
 // run clean task first, then run scripts, styles, & images tasks
