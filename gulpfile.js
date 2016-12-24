@@ -1,3 +1,5 @@
+'use strict';
+
 var gulp = require('gulp'),
     maps = require('gulp-sourcemaps'),
   concat = require('gulp-concat'),
