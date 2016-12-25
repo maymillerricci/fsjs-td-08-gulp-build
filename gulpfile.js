@@ -7,6 +7,7 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     csso = require('gulp-csso'),
   rename = require('gulp-rename'),
+   image = require('gulp-image'),
      del = require('del');
 
 // concatenate all js and minify -> all.min.js
@@ -38,10 +39,13 @@ gulp.task('styles', function() {
     .pipe(gulp.dest('dist/styles'));
 });
 
-// gulp images:
-// optimize size of jpeg & png files
+// reduce size of image files
 // -> copy -> dist/content
-gulp.task('images');
+gulp.task('images', function() {
+  return gulp.src('images/*')
+    .pipe(image())
+    .pipe(gulp.dest('dist/content'))
+});
 
 // delete everything in dist directory
 gulp.task('clean', function() {
