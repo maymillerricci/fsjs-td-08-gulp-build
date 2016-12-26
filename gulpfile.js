@@ -8,7 +8,8 @@ var gulp = require('gulp'),
     csso = require('gulp-csso'),
   rename = require('gulp-rename'),
    image = require('gulp-image'),
-     del = require('del');
+     del = require('del'),
+  server = require('gulp-webserver');
 
 // concatenate all js and minify -> all.min.js
 // with source map
@@ -35,7 +36,7 @@ gulp.task('styles', function() {
     .pipe(csso())
     .pipe(rename('all.min.css'))
     .pipe(maps.write('./'))
-    .pipe(gulp.dest('sass'))
+    .pipe(gulp.dest('css'))
     .pipe(gulp.dest('dist/styles'));
 });
 
@@ -49,12 +50,20 @@ gulp.task('images', function() {
 
 // delete everything in dist directory
 gulp.task('clean', function() {
-  del(['dist', 'js/all*.js*', 'sass/**.css*']);
+  del(['dist', 'js/all*.js*', 'css']);
+});
+
+// run build task and serve project using a local web server
+gulp.task('serve', ['build'], function() {
+  gulp.src('')
+    .pipe(server({ port: 3000 }));
 });
 
 // run clean task first, then run scripts, styles, & images tasks
 gulp.task('build', ['clean'], function() {
   gulp.start(['scripts', 'styles', 'images']);
+  gulp.src('index.html')
+    .pipe(gulp.dest('dist'));
 });
 
 // run build task
