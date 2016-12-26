@@ -56,7 +56,7 @@ gulp.task('clean', function() {
 // run build task and serve project using a local web server
 gulp.task('serve', ['build'], function() {
   gulp.src('')
-    .pipe(server({ port: 3000 }));
+    .pipe(server({ port: 3000, livereload: true }));
 });
 
 // if change is made to js file, rerun scripts task
