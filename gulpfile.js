@@ -54,10 +54,8 @@ gulp.task('clean', function() {
 
 // run clean task first, then run scripts, styles, & images tasks
 gulp.task('build', ['clean'], function() {
-  // scripts, styles, images
+  gulp.start(['scripts', 'styles', 'images']);
 });
 
 // run build task
-gulp.task('default', function() {
-  gulp.start('build');
-});
+gulp.task('default', ['build']);
