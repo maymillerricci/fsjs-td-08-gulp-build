@@ -59,10 +59,17 @@ gulp.task('serve', ['build'], function() {
     .pipe(server({ port: 3000 }));
 });
 
+// if change is made to js file, rerun scripts task
+// if change is made to sass file, rerun styles task
+gulp.task('watch', ['serve'], function() {
+  gulp.watch(['js/circle/*.js', 'js/global.js'], ['scripts']);
+  gulp.watch('sass/*.scss', ['styles']);
+});
+
 // run clean task first, then run scripts, styles, & images tasks
 gulp.task('build', ['clean'], function() {
   gulp.start(['scripts', 'styles', 'images']);
-  gulp.src('index.html')
+  return gulp.src('index.html')
     .pipe(gulp.dest('dist'));
 });
 
