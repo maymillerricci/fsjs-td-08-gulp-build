@@ -9,12 +9,14 @@ var gulp = require('gulp'),
   rename = require('gulp-rename'),
    image = require('gulp-image'),
      del = require('del'),
-  server = require('gulp-webserver');
+  server = require('gulp-webserver'),
+    lint = require('gulp-eslint');
 
-// concatenate all js and minify -> all.min.js
+// run lint task first,
+// then concatenate all js and minify -> all.min.js
 // with source map
 // -> copy -> dist/scripts
-gulp.task('scripts', function() {
+gulp.task('scripts', ['lint'], function() {
   return gulp.src(['js/circle/*.js', 'js/global.js'])
     .pipe(maps.init())
     .pipe(concat('all.js'))
@@ -23,6 +25,15 @@ gulp.task('scripts', function() {
     .pipe(maps.write('./'))
     .pipe(gulp.dest('js'))
     .pipe(gulp.dest('dist/scripts'));
+});
+
+// lint all project js files
+// output errors to console and fail if error
+gulp.task('lint', function() {
+  return gulp.src(['**/*.js', '!node_modules/**', '!dist/**'])
+    .pipe(lint({ configFile: 'eslint.json' }))
+    .pipe(lint.format())
+    .pipe(lint.failAfterError());
 });
 
 // compile scss files -> css
