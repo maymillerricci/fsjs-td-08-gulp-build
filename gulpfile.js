@@ -80,7 +80,7 @@ gulp.task('watch', ['serve'], function() {
 // run clean task first, then run scripts, styles, & images tasks
 gulp.task('build', ['clean'], function() {
   gulp.start(['scripts', 'styles', 'images']);
-  return gulp.src('index.html')
+  return gulp.src(['index.html', 'icons/**'], { base: './' })
     .pipe(gulp.dest('dist'));
 });
 
